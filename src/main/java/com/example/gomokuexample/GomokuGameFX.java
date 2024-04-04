@@ -5,12 +5,15 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GomokuGameFX extends Application {
     private static final int CELL_SIZE = 40;
@@ -45,11 +48,20 @@ public class GomokuGameFX extends Application {
         hbox.setSpacing(20);
         hbox.setMinWidth(150);
 
+        HBox user1 = new HBox();
+        Label name1 = new Label("First player's name:");
+        TextField t1 = new TextField("");
+        user1.getChildren().addAll(name1, t1);
+        HBox user2 = new HBox();
+        Label name2 = new Label("Second player's name:");
+        TextField t2 = new TextField("");
+        user2.getChildren().addAll(name2, t2);
+
         VBox root_first = new VBox();
         Button btns = new Button("start a new game");
         Button btne1 = new Button("exit");
         root_first.setSpacing(10);
-        root_first.getChildren().addAll(btns,btne1);
+        root_first.getChildren().addAll(btns,btne1,user1,user2);
 
         VBox rootv = new VBox();
         Button btnr = new Button("restart");
@@ -62,14 +74,24 @@ public class GomokuGameFX extends Application {
         Scene first = new Scene(root_first, 500, 200);
 
         btns.setOnAction(e -> {
-            primaryStage.setScene(scene);
+            String name1_str = t1.getText();
+            String name2_str = t2.getText();
+            if (name1_str.length() > 0 && name2_str.length() > 0) {
+                primaryStage.setScene(scene);
+            }
         });
+        btne1.setOnAction(e -> {
+            String name1_str = t1.getText();
+            String name2_str = t2.getText();
+            if (name1_str.length() > 0 && name2_str.length() > 0) {
+                System.exit(0);
+            }
+        });
+
         btne2.setOnAction(e -> {
             primaryStage.setScene(first);
         });
-        btne1.setOnAction(e -> {
-            System.exit(0);
-        });
+
         btnr.setOnAction(e -> {
             game = new GomokuGame(BOARD_SIZE);
             drawBoard(canvas.getGraphicsContext2D());
