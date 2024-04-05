@@ -115,6 +115,7 @@ public class GomokuGameFX extends Application {
             if (name1_str.length() > 0 && name2_str.length() > 0) {
                 game = new GomokuGame(board_num);
                 playName.setText(name1_str + " is playing.");
+                win.setText("");
                 size.setText("The board is: " + board_num + " * " + board_num);
                 drawBoard(canvas.getGraphicsContext2D());
                 primaryStage.setScene(scene);
