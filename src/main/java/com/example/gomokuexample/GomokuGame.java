@@ -100,13 +100,13 @@ class GomokuGame {
         return board;
     }
 
-//    public void setName(int id, String name) {
-//        userName[id] = name;
-//    }
-//
-//    public String getName(int id) {
-//        return userName[id];
-//    }
+    public void setName(int id, String name) {
+        userName[id] = name;
+    }
+
+    public String getName(int id) {
+        return userName[id];
+    }
 
     public int getCurrentPlayer() {
         return currentPlayer;
