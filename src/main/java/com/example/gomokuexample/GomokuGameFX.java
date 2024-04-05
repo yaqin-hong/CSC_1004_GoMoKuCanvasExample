@@ -54,12 +54,11 @@ public class GomokuGameFX extends Application {
                 }
 
                 if (game.isGameOver()) {
-                    System.out.println("Game over ! The winner is player " + game.getWinner() + "!");
-
+                    // System.out.println("Game over ! The winner is player " + game.getWinner() + "!");
                     String winner = "Game over ! \r\n The winner is \r\n player ";
-                    if (game.getWinner() == 1) {
+                    if (game.getWinner() == 2) {
                         winner += name1_str;
-                    } else if (game.getWinner() == 2){
+                    } else if (game.getWinner() == 1) {
                         winner += name2_str;
                     } else if (3 == game.getWinner()) {
                         winner = "This game is a draw";
