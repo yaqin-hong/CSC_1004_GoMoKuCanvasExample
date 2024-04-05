@@ -10,7 +10,9 @@ class GomokuGame {
 
     private int boardSize;              // size of the board
 
-    private Scanner scanner;                // scanner for human input
+    private Scanner scanner;        // scanner for human input
+
+    private String[] userName;      // 1: player1, 2: player2
 
     public GomokuGame(int boardSize) {
         if (boardSize < 5 || boardSize > 20) {
@@ -18,6 +20,7 @@ class GomokuGame {
         }
         this.boardSize = boardSize;
         board = new int[boardSize][boardSize];            // init to be all zeros
+        userName = new String[3];
         currentPlayer = 1;
         gameOver = false;
         winner = 0;
@@ -95,6 +98,18 @@ class GomokuGame {
 
     public int[][] getBoard() {
         return board;
+    }
+
+//    public void setName(int id, String name) {
+//        userName[id] = name;
+//    }
+//
+//    public String getName(int id) {
+//        return userName[id];
+//    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public void render() {                      // render the board, console version now

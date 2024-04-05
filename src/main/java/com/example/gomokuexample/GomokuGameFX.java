@@ -13,12 +13,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GomokuGameFX extends Application {
     private static final int CELL_SIZE = 40;
     private static final int BOARD_SIZE = 15;
     private GomokuGame game;
+    private String name1_str;
+    private String name2_str;
     private static final int BOARD_LENGTH = CELL_SIZE * BOARD_SIZE;
 
     @Override
@@ -29,6 +32,8 @@ public class GomokuGameFX extends Application {
         root.getChildren().add(canvas);
 
         drawBoard(canvas.getGraphicsContext2D());
+        Label playName = new Label("");
+        Label win = new Label("");
 
         canvas.setOnMouseClicked(e -> {
             int x = (int) (e.getX() / CELL_SIZE);
@@ -36,8 +41,17 @@ public class GomokuGameFX extends Application {
             // System.out.printf("%f,%f,%d,%d,\r\n",e.getX(),e.getY(),x,y);
             if (game.move(x, y)) {
                 drawBoard(canvas.getGraphicsContext2D());
+
+                int current = game.getCurrentPlayer();
+                if (2 == current) {
+                    playName.setText(name2_str + " is playing.");
+                } else {
+                    playName.setText(name1_str + " is playing.");
+                }
+
                 if (game.isGameOver()) {
                     System.out.println("Game over! The winner is player " + game.getWinner() + "!");
+                    win.setText("Game over! \r\n The winner is player " + game.getWinner() + "!");
                 }
             } else {
                 System.out.println("Invalid move!");
@@ -61,28 +75,42 @@ public class GomokuGameFX extends Application {
         Button btns = new Button("start a new game");
         Button btne1 = new Button("exit");
         root_first.setSpacing(10);
-        root_first.getChildren().addAll(btns,btne1,user1,user2);
+        root_first.getChildren().addAll(btns, btne1, user1, user2);
+
+//        HBox hname1 = new HBox();
+//        Label lname1 = new Label("");
+//        TextField tname1 = new TextField("is playing.");
+//        hname1.getChildren().addAll(lname1);
+//        HBox hname2 = new HBox();
+//        Label lname2 = new Label("");
+//        TextField tname2 = new TextField("is playing.");
+//        hname2.getChildren().addAll(lname2);
+
 
         VBox rootv = new VBox();
         Button btnr = new Button("restart");
         Button btne2 = new Button("exit");
         rootv.setSpacing(50);
-        rootv.getChildren().addAll(btnr,btne2);
-        hbox.getChildren().addAll(rootv,canvas);
+        rootv.getChildren().addAll(btnr, btne2, playName, win);
+        hbox.getChildren().addAll(rootv, canvas);
         root.getChildren().add(hbox);
         Scene scene = new Scene(root, BOARD_LENGTH + 150, BOARD_LENGTH);
         Scene first = new Scene(root_first, 500, 200);
 
         btns.setOnAction(e -> {
-            String name1_str = t1.getText();
-            String name2_str = t2.getText();
+            name1_str = t1.getText();
+            name2_str = t2.getText();
             if (name1_str.length() > 0 && name2_str.length() > 0) {
+//                lname1.setText(name1_str + "is playing.");
+//                game.setName(1, name1_str);
+//                game.setName(2,name2_str);
                 primaryStage.setScene(scene);
             }
         });
+
         btne1.setOnAction(e -> {
-            String name1_str = t1.getText();
-            String name2_str = t2.getText();
+            name1_str = t1.getText();
+            name2_str = t2.getText();
             if (name1_str.length() > 0 && name2_str.length() > 0) {
                 System.exit(0);
             }
