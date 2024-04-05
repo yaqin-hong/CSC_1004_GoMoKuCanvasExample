@@ -42,7 +42,6 @@ public class GomokuGameFX extends Application {
         canvas.setOnMouseClicked(e -> {
             int x = (int) (e.getX() / CELL_SIZE);
             int y = (int) (e.getY() / CELL_SIZE);
-            // System.out.printf("%f,%f,%d,%d,\r\n",e.getX(),e.getY(),x,y);
             if (game.move(x, y)) {
                 drawBoard(canvas.getGraphicsContext2D());
 
@@ -88,11 +87,13 @@ public class GomokuGameFX extends Application {
         Button btne1 = new Button("exit");
         root_first.setSpacing(10);
 
+        Label size = new Label("");
+
         VBox rootv = new VBox();
         Button btnr = new Button("restart");
         Button btne2 = new Button("exit");
         rootv.setSpacing(50);
-        rootv.getChildren().addAll(btnr, btne2, playName, win);
+        rootv.getChildren().addAll(btnr, btne2, playName, win, size);
         hbox.getChildren().addAll(rootv, canvas);
         root.getChildren().add(hbox);
         Scene scene = new Scene(root, CELL_SIZE * board_num + 400, CELL_SIZE * board_num);
@@ -114,13 +115,14 @@ public class GomokuGameFX extends Application {
             if (name1_str.length() > 0 && name2_str.length() > 0) {
                 game = new GomokuGame(board_num);
                 playName.setText(name1_str + " is playing.");
+                size.setText("The board is: " + board_num + " * " + board_num);
                 drawBoard(canvas.getGraphicsContext2D());
                 primaryStage.setScene(scene);
             }
         });
 
         btne1.setOnAction(e -> {
-                System.exit(0);
+            System.exit(0);
         });
 
         btne2.setOnAction(e -> {
@@ -130,6 +132,7 @@ public class GomokuGameFX extends Application {
         btnr.setOnAction(e -> {
             playName.setText(name1_str + " is playing.");
             win.setText("");
+            size.setText("The board is: " + board_num + " * " + board_num);
             game = new GomokuGame(BOARD_SIZE);
             drawBoard(canvas.getGraphicsContext2D());
         });
