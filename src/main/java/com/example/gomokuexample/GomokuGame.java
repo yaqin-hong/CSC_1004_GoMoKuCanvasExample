@@ -6,7 +6,7 @@ class GomokuGame {
     private int[][] board;          // 0: empty, 1: player1's stone, 2: player2's stone
     private int currentPlayer;      // 1: player1, 2: player2
     private boolean gameOver;       // true: game over, false: game not over
-    private int winner;             // 0: no winner, 1: player 1 wins, 2: player 2 wins
+    private int winner;             // 0: no winner, 1: player 1 wins, 2: player 2 wins, 3: a draw
 
     private int boardSize;              // size of the board
 
@@ -76,11 +76,23 @@ class GomokuGame {
         }
         
         board[x][y] = currentPlayer;
+        currentPlayer = currentPlayer == 1 ? 2 : 1;      // switch player
+
         if (checkWin(x, y)) {
             gameOver = true;
             winner = currentPlayer;
+        } else {
+            for (int i = 0; i < boardSize; i++) {
+                for (int j = 0; j < boardSize; j++) {
+                    if (board[i][j] == 0) {
+                        gameOver = false;
+                        return true;
+                    }
+                }
+            }
+            winner = 3;
+            gameOver = true;
         }
-        currentPlayer = currentPlayer == 1 ? 2 : 1;      // switch player
         return true;
     }
 
