@@ -30,7 +30,7 @@ public class GomokuGameFX extends Application {
     public void start(Stage primaryStage) {
         game = new GomokuGame(BOARD_SIZE);
         StackPane root = new StackPane();
-        board_num = BOARD_SIZE;
+        // board_num = 15;// BOARD_SIZE;
         Canvas canvas = new Canvas(CELL_SIZE * BOARD_SIZE, CELL_SIZE * BOARD_SIZE);
         root.getChildren().add(canvas);
 
@@ -54,13 +54,16 @@ public class GomokuGameFX extends Application {
                 }
 
                 if (game.isGameOver()) {
-                    // System.out.println("Game over ! The winner is player " + game.getWinner() + "!");
                     String winner = "Game over ! \r\n The winner is \r\n player ";
+                    win.setTextFill(Color.BLACK);
                     if (game.getWinner() == 2) {
+                        win.setTextFill(Color.RED);
                         winner += name1_str;
                     } else if (game.getWinner() == 1) {
+                        win.setTextFill(Color.RED);
                         winner += name2_str;
                     } else if (3 == game.getWinner()) {
+                        win.setTextFill(Color.GREEN);
                         winner = "This game is a draw";
                     }
                     win.setText(winner + " !");
@@ -97,11 +100,12 @@ public class GomokuGameFX extends Application {
         rootv.getChildren().addAll(btnr, btne2, playName, win, size);
         hbox.getChildren().addAll(rootv, canvas);
         root.getChildren().add(hbox);
-        Scene scene = new Scene(root, CELL_SIZE * board_num + 400, CELL_SIZE * board_num);
+        Scene scene = new Scene(root, CELL_SIZE * BOARD_SIZE + 400, CELL_SIZE * BOARD_SIZE);
         Scene first = new Scene(root_first, 500, 200);
 
         Slider slBoard = new Slider(5,20,1);
-        slBoard.setValue(15);
+        board_num = 15;    // BOARD_SIZE;
+        slBoard.setValue(board_num);
         slBoard.setShowTickLabels(true);
         slBoard.setShowTickMarks(true);
         slBoard.setSnapToTicks(true);
@@ -135,7 +139,7 @@ public class GomokuGameFX extends Application {
             playName.setText(name1_str + " is playing.");
             win.setText("");
             size.setText("The board is: " + board_num + " * " + board_num);
-            game = new GomokuGame(BOARD_SIZE);
+            game = new GomokuGame(board_num);
             drawBoard(canvas.getGraphicsContext2D());
         });
 
